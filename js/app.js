@@ -1,59 +1,133 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const cartButton = document.getElementById('cart-button');
+    const cartCount = document.getElementById('cart-count');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementsByClassName('close')[0];
+    const continueButton = document.getElementById('continue-button');
+    const checkoutSection = document.getElementById('checkout');
+    const cartItemsList = document.getElementById('cart-items');
+    const totalAmount = document.getElementById('total-amount');
+    const payButton = document.getElementById('pay-button');
 
-const headerMenu=document.querySelector('.hm-header');
+    let cart = [];
 
-console.log(headerMenu.offsetTop);
+    const products = [
+        { id: 1, name: 'Producto 1', price: 1 },
+        { id: 2, name: 'Producto 2', price: 2 },
+        { id: 3, name: 'Producto 3', price: 3 },
+        { id: 4, name: 'Producto 4', price: 4 },
+        { id: 5, name: 'Producto 5', price: 5 },
+        { id: 6, name: 'Producto 6', price: 6 },
+        { id: 7, name: 'Producto 7', price: 7 },
+        { id: 8, name: 'Producto 8', price: 8 },
+    ];
 
-window.addEventListener('scroll',()=>{
-    if(window.pageYOffset > 80){
-        headerMenu.classList.add('header-fixed');
-    }else{
-        headerMenu.classList.remove('header-fixed');
-    }
-})
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = parseInt(button.dataset.id);
+            const productPrice = parseInt(button.dataset.price);
+            const product = products.find(p => p.id === productId);
 
-/*=========================================
-    Tabs
-==========================================*/
-if(document.querySelector('.hm-tabs')){
+            cart.push(product);
+            cartCount.innerText = cart.length;
 
-    const tabLinks=document.querySelectorAll('.hm-tab-link');
-    const tabsContent=document.querySelectorAll('.tabs-content');
-
-    tabLinks[0].classList.add('active');
-
-    if(document.querySelector('.tabs-content')){
-        tabsContent[0].classList.add('tab-active');
-    }
-    
-
-    for (let i = 0; i < tabLinks.length; i++) {
-        
-        tabLinks[i].addEventListener('click',()=>{
-
-            
-            tabLinks.forEach((tab) => tab.classList.remove('active'));
-            tabLinks[i].classList.add('active');
-            
-            tabsContent.forEach((tabCont) => tabCont.classList.remove('tab-active'));
-            tabsContent[i].classList.add('tab-active');
-            
+            showToast();
         });
-        
+    });
+
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 3000);
     }
 
-}
+    cartButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
 
-/*=========================================
-    MENU
-==========================================*/
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 
-const menu=document.querySelector('.icon-menu');
-const menuClose=document.querySelector('.cerrar-menu');
+    continueButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.querySelector('main').style.display = 'none';
+        checkoutSection.classList.remove('hidden');
+        renderCartItems();
+    });
 
-menu.addEventListener('click',()=>{
-    document.querySelector('.header-menu-movil').classList.add('active');
-})
+    function renderCartItems() {
+        cartItemsList.innerHTML = '';
+        let total = 0;
 
-menuClose.addEventListener('click',()=>{
-    document.querySelector('.header-menu-movil').classList.remove('active');
-})
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - ${item.price}€`;
+            cartItemsList.appendChild(li);
+            total += item.price;
+        });
+
+        totalAmount.innerText = total;
+    }
+
+    payButton.addEventListener('click', async () => {
+        const paymentMethod = document.getElementById('payment-method').value;
+        const environment = document.getElementById('env-select').value;
+
+        const orderURL = environment === "PRODUCTION"
+            ? "https://demo-ws-paylands.paynopain.com/v1/payment"
+            : "https://demo-ws-paylands.paynopain.com/v1/sandbox/payment";
+
+        const service = environment === "PRODUCTION"
+            ? "6284A51B-A423-464C-9F70-28A964266C90"
+            : "A53436DB-71E6-43A9-A066-14C89B3400A6";
+
+        const checkout = environment === "PRODUCTION"
+            ? ""
+            : "619D3A8C-8479-4415-B543-62E59FF08FCB";
+
+        await fetch(orderURL, {
+            method: "POST",
+            headers: {
+                'Authorization': 'Basic 5d66a96f460f4109b24c2243fb1c43e1',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "signature": "341f7de8e6fc49da8d8736473af6b03a",
+                "amount": totalAmount.value,
+                "operative": "AUTHORIZATION",
+                "secure": true,
+                "customer_ext_id": "test",
+                "description": "test",
+                "additional": "Paylands",
+                "expires_in": 86400,
+                "service": service,
+                "extra_data": {
+                    "checkout": {
+                        "uuid": checkout
+                    }
+                }
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const token = data.order.token;
+
+                alert(token);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        // alert('Compra realizada con éxito!');
+        // location.reload();
+    });
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+});
