@@ -6,7 +6,6 @@
     <title>La tienda de Paylands</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script async src="https://demo-ws-paylands.paynopain.com/assets/checkout/paylands-checkout-sdk.js"></script>
 </head>
 <body>
 <header>
@@ -64,9 +63,26 @@
         <span class="close">&times;</span>
         <h2>Seleccione un método de pago</h2>
         <select id="payment-method" class="env-selector">
-            <option value="credit-card">Tarjeta de crédito</option>
+            <option value="redirect">Checkout por redirección</option>
+            <option value="render">Checkout renderizado</option>
+            <option value="payment_card">Tarjeta de crédito</option>
+            <option value="wallets">Apple Pay / Google Pay</option>
             <option value="paypal">PayPal</option>
-            <option value="bank-transfer">Transferencia bancaria</option>
+            <option value="bizum">Bizum</option>
+            <option value="cofidis">Cofidis</option>
+            <option value="giropay">Giropay</option>
+            <option value="ideal">Ideal</option>
+            <option value="klarna">Klarna</option>
+            <option value="crypto">Crypto</option>
+            <option value="pix">Pix</option>
+            <option value="floa">Floa</option>
+            <option value="mbway">MBWay</option>
+            <option value="multibanco">Multibanco</option>
+            <option value="pse">Pse</option>
+            <option value="sofort">Sofort</option>
+            <option value="spei">Spei</option>
+            <option value="transfer">Transferencia bancaria</option>
+            <option value="viacash">Viacash</option>
         </select>
         <select id="env-select" class="env-selector">
             <option value="SANDBOX" selected>SANDBOX</option>
@@ -83,6 +99,7 @@
     <button id="pay-button">Pagar</button>
 </div>
 
+<script async src="https://demo-ws-paylands.paynopain.com/assets/checkout/paylands-checkout-sdk.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

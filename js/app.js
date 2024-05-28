@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalAmount.innerText = total;
     }
 
-    payButton.addEventListener('click', async () => {
+    payButton.addEventListener('click',  () => {
         const paymentMethod = document.getElementById('payment-method').value;
         const environment = document.getElementById('env-select').value;
 
@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ? ""
             : "619D3A8C-8479-4415-B543-62E59FF08FCB";
 
-        await fetch(orderURL, {
+        fetch(orderURL, {
             method: "POST",
             headers: {
-                'Authorization': 'Basic 5d66a96f460f4109b24c2243fb1c43e1',
+                'Authorization': 'Bearer 5d66a96f460f4109b24c2243fb1c43e1',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -99,16 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 "amount": totalAmount.value,
                 "operative": "AUTHORIZATION",
                 "secure": true,
-                "customer_ext_id": "test",
-                "description": "test",
-                "additional": "Paylands",
-                "expires_in": 86400,
+                "description": "Checkout SDK Test",
                 "service": service,
-                "extra_data": {
-                    "checkout": {
-                        "uuid": checkout
-                    }
-                }
+                "extra_data": {"checkout": {"uuid": checkout}}
             })
         })
             .then(response => response.json())
