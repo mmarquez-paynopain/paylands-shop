@@ -88,15 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ? ""
             : "619D3A8C-8479-4415-B543-62E59FF08FCB";
 
-        fetch(orderURL, {
-            method: "POST",
+        fetch('https://paylands-shop.vercel.app/proxy', {
+            method: 'POST',
             headers: {
-                'Authorization': 'Bearer 5d66a96f460f4109b24c2243fb1c43e1',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "signature": "341f7de8e6fc49da8d8736473af6b03a",
-                "amount": totalAmount.value,
+                "signature": "8fl09JVCO5O31KZmI8sYP7hT",
+                "amount": 1,
                 "operative": "AUTHORIZATION",
                 "secure": true,
                 "description": "Checkout SDK Test",

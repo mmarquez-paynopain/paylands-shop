@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/mmarquez-paynopain/paylands-shop/issues"
   },
-  "homepage": "https://github.com/mmarquez-paynopain/paylands-shop#readme"
+  "homepage": "https://github.com/mmarquez-paynopain/paylands-shop#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "request": "^2.88.2"
+  }
 }
