@@ -66,7 +66,7 @@
             <option value="redirect">Checkout por redirección</option>
             <option value="render">Checkout renderizado</option>
             <option value="payment_card">Tarjeta de crédito</option>
-            <option value="wallets">Apple Pay / Google Pay</option>
+            <option value="wallets">Google Pay</option>
             <option value="paypal">PayPal</option>
             <option value="bizum">Bizum</option>
             <option value="cofidis">Cofidis</option>
@@ -96,7 +96,8 @@
     <h2>Resumen de la compra</h2>
     <ul id="cart-items"></ul>
     <p>Total: <span id="total-amount">0</span>€</p>
-    <button id="pay-button">Pagar</button>
+    <div id="payment-iframe"></div>
+    <button id="pay-button" class="disabled">Pagar</button>
 </div>
 
 <script async src="https://demo-ws-paylands.paynopain.com/assets/checkout/paylands-checkout-sdk.js"></script>

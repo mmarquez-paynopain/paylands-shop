@@ -1,29 +1,34 @@
-const express = require('express');
-const request = require('request');
+import express from 'express';
+import fetch from 'node-fetch';
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.post('/proxy', (req, res) => {
-    const options = {
-        url: 'https://demo-ws-paylands.paynopain.com/v1/sandbox/payment',
-        method: 'POST',
-        headers: {
-            'Authorization': 'Basic YzdhZTI3NmI3ODQ3NDI3ZDhjMGIxOGVjZWFjODg0NWY6',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(req.body)
-    };
+app.post('/proxy', async (req, res) => {
+    const apiUrl = 'https://demo-ws-paylands.paynopain.com/v1/sandbox/payment';
+    const token = 'c7ae276b7847427d8c0b18eceac8845f';
 
-    request(options, (error, response, body) => {
-        if (error) {
-            res.status(500).send(error);
-        } else {
-            res.status(response.statusCode).send(body);
-        }
-    });
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req.body),
+        });
+
+        const result = await response.json();
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Error en la solicitud de pago' });
+    }
 });
 
-app.listen(3000, () => {
-    console.log('Proxy server running on port 3000');
+app.use(express.static('public'));
+
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });

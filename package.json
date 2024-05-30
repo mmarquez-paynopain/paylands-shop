@@ -1,10 +1,12 @@
 {
   "name": "paylands-shop",
+  "type": "module",
   "version": "1.0.0",
   "description": "Diseño Tienda Online para Checkout SDK",
-  "main": "/js/app.js",
+  "main": "/public/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,6 @@
   "homepage": "https://github.com/mmarquez-paynopain/paylands-shop#readme",
   "dependencies": {
     "express": "^4.19.2",
-    "request": "^2.88.2"
+    "node-fetch": "^3.3.2"
   }
 }

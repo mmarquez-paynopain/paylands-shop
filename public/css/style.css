@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -84,6 +88,13 @@ button {
 
 button:hover {
     background-color: #333;
+}
+
+button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .hidden {
@@ -178,6 +189,17 @@ button:hover {
 .toast.hidden {
     opacity: 0;
     pointer-events: none;
+}
+
+#checkout {
+    flex-direction: column;
+    height: 100%;
+    padding: 1em;
+}
+
+#payment-iframe {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Responsive Design */
