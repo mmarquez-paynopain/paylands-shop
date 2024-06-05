@@ -121,8 +121,40 @@ button.disabled {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 400px;
+    max-width: 700px;
     border-radius: 4px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.config_form {
+    display: none;
+    flex-direction: column;
+}
+
+.config_form label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 8px;
+    width: 390px;
+}
+
+.config_form input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+a {
+    padding: 5px;
+    flex: 0.65;
 }
 
 .close {
@@ -200,6 +232,11 @@ button.disabled {
 #payment-iframe {
     display: flex;
     flex-direction: column;
+    max-width: 400px;
+}
+
+#pay-button {
+    width: 200px;
 }
 
 /* Responsive Design */
@@ -231,7 +268,7 @@ button.disabled {
     }
 
     .modal-content {
-        width: 95%;
+        width: 90%;
         margin-top: 40%;
     }
 }

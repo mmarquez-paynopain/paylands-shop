@@ -84,10 +84,114 @@
             <option value="transfer">Transferencia bancaria</option>
             <option value="viacash">Viacash</option>
         </select>
-        <select id="env-select" class="env-selector">
-            <option value="SANDBOX" selected>SANDBOX</option>
-            <option value="PRODUCTION">PRODUCTION</option>
-        </select>
+        <form id="payment_card_form" class="config_form">
+            <hr/>
+            <div class="row">
+                <label for="holder-label">holderLabel</label><input type="text" id="holder-label" value="Nombre y apellidos"/>
+                <label for="holder-error">holderError</label><input type="text" id="holder-error" value="Nombre incorrecto"/>
+            </div>
+            <div class="row">
+                <label for="pan-label">panLabel</label><input type="text" id="pan-label" value="Número de la tarjeta"/>
+                <label for="pan-error">panError</label><input type="text" id="pan-error" value="Número de la tarjeta incorrecto"/>
+            </div>
+            <div class="row">
+                <label for="expiry-label">expiryLabel</label><input type="text" id="expiry-label" value="Fecha de caducidad"/>
+                <label for="expiry-error">expiryError</label><input type="text" id="expiry-error" value="Fecha incorrecta o caducada"/>
+            </div>
+            <div class="row">
+                <label for="cvv-label">cvvLabel</label><input type="text" id="cvv-label" value="Código de seguridad"/>
+                <label for="cvv-error">cvvError</label><input type="text" id="cvv-error" value="CVV incorrecto"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <label for="font">font</label><input type="text" id="font" value="system-ui"/>
+                <label for="text-color">textColor</label><input type="color" id="text-color" value="#000000"/>
+            </div>
+            <div class="row">
+                <label for="background-color">backgroundColor</label><input type="color" id="background-color" value="#FFFFFF"/>
+                <label for="error-color">errorColor</label><input type="color" id="error-color" value="#FF0000"/>
+            </div>
+            <div class="row">
+                <label for="border-color">borderColor</label><input type="color" id="border-color" value="#EE1B4E"/>
+                <label for="icon-color">iconColor</label><input type="color" id="icon-color" value="#EE1B4E"/>
+            </div>
+            <div class="row">
+                <label for="border-radius">borderRadius</label><input type="text" id="border-radius" value="16px"/>
+                <label for="padding">padding</label><input type="text" id="padding" value="15px"/>
+            </div>
+            <div class="row">
+                <label for="input-text-size">inputTextSize</label><input type="text" id="input-text-size" value="14px"/>
+                <label for="label-text-size">labelTextSize</label><input type="text" id="label-text-size" value="12px"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <a href="https://docs.paylands.com/docs/guides/guide-checkout#formulario-de-tarjeta">Paylands documentation</a>
+            </div>
+            <hr/>
+        </form>
+        <form id="paypal_form" class="config_form">
+            <hr/>
+            <div class="row">
+                <label for="prefilled-address">prefilledAddress</label><input type="text" id="prefilled-address" value="Paseo de la Universidad, 23"/>
+                <label for="prefilled-country">prefilledCountry</label><input type="text" id="prefilled-country" maxlength="3" value="ESP"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <label for="layout">layout</label><input type="text" id="layout" value="horizontal"/>
+                <label for="color">color</label><input type="text" id="color" value="black"/>
+            </div>
+            <div class="row">
+                <label for="label">label</label><input type="text" id="label" value="pay"/>
+                <label for="borderRadius">borderRadius</label><input type="number" id="borderRadius" value="16"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <a href="https://docs.paylands.com/docs/guides/guide-checkout#paypal">Paylands documentation</a>
+                <a href="https://developer.paypal.com/sdk/js/reference/">PayPal documentation</a>
+            </div>
+            <hr/>
+        </form>
+        <form id="bizum_form" class="config_form">
+            <hr/>
+            <div class="row">
+                <label for="prefix-label">prefixLabel</label><input type="text" id="prefix-label" value="Prefijo"/>
+                <label for="prefix-error">prefixError</label><input type="text" id="prefix-error" value="El prefijo no es válido"/>
+            </div>
+            <div class="row">
+                <label for="phone-label">phoneLabel</label><input type="text" id="phone-label" value="Número de teléfono"/>
+                <label for="phone-error">phoneError</label><input type="text" id="phone-error" value="El número no es válido"/>
+            </div>
+            <div class="row">
+                <label for="prefilled-prefix">prefilledPrefix</label><input type="number" id="prefilled-prefix" maxlength="3" value="34"/>
+                <label for="prefilled-phone">prefilledPhone</label><input type="number" id="prefilled-phone" maxlength="9" value="666555444"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <label for="bizum-font">font</label><input type="text" id="bizum-font" value="system-ui"/>
+                <label for="bizum-text-color">textColor</label><input type="color" id="bizum-text-color" value="#000000"/>
+            </div>
+            <div class="row">
+                <label for="bizum-background-color">backgroundColor</label><input type="color" id="bizum-background-color" value="#FFFFFF"/>
+                <label for="bizum-error-color">errorColor</label><input type="color" id="bizum-error-color" value="#FF0000"/>
+            </div>
+            <div class="row">
+                <label for="bizum-border-color">borderColor</label><input type="color" id="bizum-border-color" value="#04b9c6"/>
+                <label for="bizum-icon-color">iconColor</label><input type="color" id="bizum-icon-color" value="#04b9c6"/>
+            </div>
+            <div class="row">
+                <label for="bizum-border-radius">borderRadius</label><input type="text" id="bizum-border-radius" value="16px"/>
+                <label for="bizum-padding">padding</label><input type="text" id="bizum-padding" value="15px"/>
+            </div>
+            <div class="row">
+                <label for="bizum-input-text-size">inputTextSize</label><input type="text" id="bizum-input-text-size" value="14px"/>
+                <label for="bizum-label-text-size">labelTextSize</label><input type="text" id="bizum-label-text-size" value="12px"/>
+            </div>
+            <hr/>
+            <div class="row">
+                <a href="https://docs.paylands.com/docs/guides/guide-checkout#bizum">Paylands documentation</a>
+            </div>
+            <hr/>
+        </form>
         <button id="continue-button">Continuar</button>
     </div>
 </div>

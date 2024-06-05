@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', () => {
             const productId = parseInt(button.dataset.id);
-            const productPrice = parseInt(button.dataset.price);
             const product = products.find(p => p.id === productId);
 
             cart.push(product);
@@ -51,25 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'none';
     });
 
+    document.getElementById('payment-method').addEventListener('change', function() {
+        document.querySelectorAll('.config_form').forEach(configForm => {
+            configForm.style.display = 'none';
+        });
+
+        document.getElementById(this.value + '_form').style.display = 'flex';
+    });
+
     continueButton.addEventListener('click', () => {
         modal.style.display = 'none';
         document.querySelector('main').style.display = 'none';
         checkoutSection.classList.remove('hidden');
-
-        const paymentMethod = document.getElementById('payment-method').value;
-        const environment = document.getElementById('env-select').value;
-
-        const orderURL = environment === "PRODUCTION"
-            ? "https://demo-ws-paylands.paynopain.com/v1/payment"
-            : "https://demo-ws-paylands.paynopain.com/v1/sandbox/payment";
-
-        const service = environment === "PRODUCTION"
-            ? "6284A51B-A423-464C-9F70-28A964266C90"
-            : "A53436DB-71E6-43A9-A066-14C89B3400A6";
-
-        const checkout = environment === "PRODUCTION"
-            ? ""
-            : "619D3A8C-8479-4415-B543-62E59FF08FCB";
 
         renderCartItems();
 
@@ -84,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 "operative": "AUTHORIZATION",
                 "secure": true,
                 "description": "Checkout SDK Test",
-                "service": service,
-                "extra_data": {"checkout": {"uuid": checkout}}
+                "service": "A53436DB-71E6-43A9-A066-14C89B3400A6",
+                "extra_data": {"checkout": {"uuid": "619D3A8C-8479-4415-B543-62E59FF08FCB"}}
             })
         })
             .then(response => response.json())
@@ -98,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     mode: "DEMO"
                 });
 
+                const paymentMethod = document.getElementById('payment-method').value;
+
                 if (paymentMethod === "redirect") {
                     await paylandsCheckout.redirect();
                 } else if (paymentMethod === "render") {
@@ -106,27 +100,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     await paylandsCheckout.card({
                         container: "payment-iframe",
                         form: {
-                            holderLabel: "Nombre y apellidos",
-                            holderError: "Nombre incorrecto",
-                            panLabel: "Número de la tarjeta",
-                            panError: "Número de la tarjeta incorrecto",
-                            expiryLabel: "Fecha de caducidad",
-                            expiryError: "Fecha incorrecta o caducada",
-                            cvvLabel: "Código de seguridad",
-                            cvvError: "CVV incorrecto"
+                            holderLabel: document.getElementById('holder-label').value,
+                            holderError: document.getElementById('holder-error').value,
+                            panLabel: document.getElementById('pan-label').value,
+                            panError: document.getElementById('pan-error').value,
+                            expiryLabel: document.getElementById('expiry-label').value,
+                            expiryError: document.getElementById('expiry-error').value,
+                            cvvLabel: document.getElementById('cvv-label').value,
+                            cvvError: document.getElementById('cvv-error').value,
                         },
                         customization: {
-                            font: "system-ui",
-                            textColor: "black",
-                            backgroundColor: "white",
-                            errorColor: "red",
-                            borderColor: "#EE1B4E",
-                            borderRadius: "16px",
-                            padding: "15px",
-                            inputTextSize: "14px",
-                            labelTextSize: "12px",
+                            font: document.getElementById('font').value,
+                            textColor: document.getElementById('text-color').value,
+                            backgroundColor: document.getElementById('background-color').value,
+                            errorColor: document.getElementById('error-color').value,
+                            borderColor: document.getElementById('border-color').value,
+                            borderRadius: document.getElementById('border-radius').value,
+                            padding: document.getElementById('padding').value,
+                            inputTextSize: document.getElementById('input-text-size').value,
+                            labelTextSize: document.getElementById('label-text-size').value,
                             iconSize: "20px",
-                            iconColor: "#EE1B4E"
+                            iconColor: document.getElementById('icon-color').value,
                         }
                     });
 
@@ -153,39 +147,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     await paylandsCheckout.payPal({
                         container: 'payment-iframe',
                         form: {
-                            prefilledAddress: "Paseo de la Universidad, 23",
-                            prefilledCountry: "ESP"
+                            prefilledAddress: document.getElementById('prefilled-address').value,
+                            prefilledCountry: document.getElementById('prefilled-country').value,
                         },
                         customization: {
-                            layout: "horizontal",
-                            color: "black",
-                            label: "pay",
-                            borderRadius: 16
+                            layout: document.getElementById('layout').value,
+                            color: document.getElementById('color').value,
+                            label: document.getElementById('label').value,
+                            borderRadius: document.getElementById('borderRadius').value,
                         }
                     });
                 } else if (paymentMethod === "bizum") {
                     await paylandsCheckout.bizum({
                         container: 'payment-iframe',
                         form: {
-                            prefixLabel: "Prefijo",
-                            prefixError: "El prefijo no es válido",
-                            phoneLabel: "Número de teléfono",
-                            phoneError: "El número no es válido",
-                            prefilledPrefix: "34",
-                            prefilledPhone: null
+                            prefixLabel: document.getElementById('prefix-label').value,
+                            prefixError: document.getElementById('prefix-error').value,
+                            phoneLabel: document.getElementById('phone-label').value,
+                            phoneError: document.getElementById('phone-error').value,
+                            prefilledPrefix: document.getElementById('prefilled-prefix').value,
+                            prefilledPhone: document.getElementById('prefilled-phone').value,
                         },
                         customization: {
-                            font: "system-ui",
-                            textColor: "black",
-                            backgroundColor: "white",
-                            errorColor: "red",
-                            borderColor: "#04b9c6",
-                            borderRadius: "16px",
-                            padding: "15px",
-                            inputTextSize: "14px",
-                            labelTextSize: "12px",
+                            font: document.getElementById('bizum-font').value,
+                            textColor: document.getElementById('bizum-text-color').value,
+                            backgroundColor: document.getElementById('bizum-background-color').value,
+                            errorColor: document.getElementById('bizum-error-color').value,
+                            borderColor: document.getElementById('bizum-border-color').value,
+                            borderRadius: document.getElementById('bizum-border-radius').value,
+                            padding: document.getElementById('bizum-padding').value,
+                            inputTextSize: document.getElementById('bizum-input-text-size').value,
+                            labelTextSize: document.getElementById('bizum-label-text-size').value,
                             iconSize: "20px",
-                            iconColor: "#04b9c6"
+                            iconColor: document.getElementById('bizum-icon-color').value,
                         }
                     });
 
@@ -216,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (event.data.render) {
                 document.getElementById('payment-iframe').innerHTML = event.data.render;
                 document.getElementById('payment-iframe').style.height = "100%";
-                document.querySelector('form').submit();
+                // document.querySelector('form').submit();
             } else if (event.data.error) {
                 document.getElementById('payment-iframe').innerHTML = event.data.error;
                 document.getElementById('payment-iframe').style.height = "100%";
@@ -237,13 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         totalAmount.innerText = total;
     }
-
-    payButton.addEventListener('click',  () => {
-
-
-        // alert('Compra realizada con éxito!');
-        // location.reload();
-    });
 
     window.onclick = function(event) {
         if (event.target === modal) {
