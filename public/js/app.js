@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cartButton.addEventListener('click', () => {
         modal.style.display = 'block';
+
+        const paymentMethod = document.getElementById('payment-method').value;
+        document.getElementById(paymentMethod + '_form').style.display = 'flex';
     });
 
     closeModal.addEventListener('click', () => {
@@ -128,58 +131,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     window.addEventListener('message', event => {
                         if (event.data.card_valid === 1) {
-                            document.getElementById('pay-button').classList.remove('disabled');
+                            payButton.classList.remove('disabled');
                         }
 
                         if (event.data.card_valid === 0) {
-                            document.getElementById('pay-button').classList.add('disabled');
+                            payButton.classList.add('disabled');
                         }
                     });
 
-                    document.getElementById('pay-button').addEventListener("click", () => {
+                    payButton.addEventListener("click", () => {
                         window.postMessage({ pay: "card" });
                     });
                 } else if (paymentMethod === "wallets") {
-                    document.getElementById('pay-button').style.display = "none";
+                    payButton.style.display = "none";
                     await paylandsCheckout.google_pay('payment-iframe');
                 } else if (paymentMethod === "paypal") {
-                    document.getElementById('pay-button').style.display = "none";
+                    payButton.style.display = "none";
                     await paylandsCheckout.payPal({
                         container: 'payment-iframe',
                         form: {
-                            prefilledAddress: document.getElementById('prefilled-address').value,
-                            prefilledCountry: document.getElementById('prefilled-country').value,
+                            prefilledAddress: document.getElementById(paymentMethod + '-prefilled-address').value,
+                            prefilledCountry: document.getElementById(paymentMethod + '-prefilled-country').value,
                         },
                         customization: {
                             layout: document.getElementById('layout').value,
                             color: document.getElementById('color').value,
                             label: document.getElementById('label').value,
-                            borderRadius: document.getElementById('borderRadius').value,
+                            borderRadius: parseFloat(document.getElementById('borderRadius').value),
                         }
                     });
                 } else if (paymentMethod === "bizum") {
                     await paylandsCheckout.bizum({
                         container: 'payment-iframe',
                         form: {
-                            prefixLabel: document.getElementById('prefix-label').value,
-                            prefixError: document.getElementById('prefix-error').value,
-                            phoneLabel: document.getElementById('phone-label').value,
-                            phoneError: document.getElementById('phone-error').value,
-                            prefilledPrefix: document.getElementById('prefilled-prefix').value,
-                            prefilledPhone: document.getElementById('prefilled-phone').value,
+                            prefixLabel: document.getElementById(paymentMethod + '-prefix-label').value,
+                            prefixError: document.getElementById(paymentMethod + '-prefix-error').value,
+                            phoneLabel: document.getElementById(paymentMethod + '-phone-label').value,
+                            phoneError: document.getElementById(paymentMethod + '-phone-error').value,
+                            prefilledPrefix: document.getElementById(paymentMethod + '-prefilled-prefix').value,
+                            prefilledPhone: document.getElementById(paymentMethod + '-prefilled-phone').value,
                         },
                         customization: {
-                            font: document.getElementById('bizum-font').value,
-                            textColor: document.getElementById('bizum-text-color').value,
-                            backgroundColor: document.getElementById('bizum-background-color').value,
-                            errorColor: document.getElementById('bizum-error-color').value,
-                            borderColor: document.getElementById('bizum-border-color').value,
-                            borderRadius: document.getElementById('bizum-border-radius').value,
-                            padding: document.getElementById('bizum-padding').value,
-                            inputTextSize: document.getElementById('bizum-input-text-size').value,
-                            labelTextSize: document.getElementById('bizum-label-text-size').value,
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
                             iconSize: "20px",
-                            iconColor: document.getElementById('bizum-icon-color').value,
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
                         }
                     });
 
@@ -187,16 +190,194 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     window.addEventListener('message', event => {
                         if (event.data.bizum_valid === true) {
-                            document.getElementById('pay-button').classList.remove('disabled');
+                            payButton.classList.remove('disabled');
                         }
 
                         if (event.data.bizum_valid === false) {
-                            document.getElementById('pay-button').classList.add('disabled');
+                            payButton.classList.add('disabled');
                         }
                     });
 
-                    document.getElementById('pay-button').addEventListener("click", () => {
-                        window.postMessage({ pay: "bizum" });
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if (paymentMethod === "cofidis") {
+                    await paylandsCheckout.cofidis({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "140px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.cofidis_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.cofidis_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if (paymentMethod === "giropay") {
+                    await paylandsCheckout.giropay({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            addressLabel: document.getElementById(paymentMethod + '-address-label').value,
+                            addressError: document.getElementById(paymentMethod + '-address-error').value,
+                            zipCodeLabel: document.getElementById(paymentMethod + '-zipcode-label').value,
+                            zipCodeError: document.getElementById(paymentMethod + '-zipcode-error').value,
+                            cityLabel: document.getElementById(paymentMethod + '-city-label').value,
+                            cityError: document.getElementById(paymentMethod + '-city-error').value,
+                            countryLabel: document.getElementById(paymentMethod + '-country-label').value,
+                            countryError: document.getElementById(paymentMethod + '-country-error').value,
+                            stateLabel: document.getElementById(paymentMethod + '-state-label').value,
+                            stateError: document.getElementById(paymentMethod + '-state-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                            prefilledAddress: document.getElementById(paymentMethod + '-prefilled-address').value,
+                            prefilledZipCode: document.getElementById(paymentMethod + '-prefilled-zipcode').value,
+                            prefilledCity: document.getElementById(paymentMethod + '-prefilled-city').value,
+                            prefilledCountry: document.getElementById(paymentMethod + '-prefilled-country').value,
+                            prefilledState: document.getElementById(paymentMethod + '-prefilled-state').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "310px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.giropay_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.giropay_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if (paymentMethod === "ideal") {
+                    await paylandsCheckout.ideal({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            addressLabel: document.getElementById(paymentMethod + '-address-label').value,
+                            addressError: document.getElementById(paymentMethod + '-address-error').value,
+                            zipCodeLabel: document.getElementById(paymentMethod + '-zipcode-label').value,
+                            zipCodeError: document.getElementById(paymentMethod + '-zipcode-error').value,
+                            cityLabel: document.getElementById(paymentMethod + '-city-label').value,
+                            cityError: document.getElementById(paymentMethod + '-city-error').value,
+                            countryLabel: document.getElementById(paymentMethod + '-country-label').value,
+                            countryError: document.getElementById(paymentMethod + '-country-error').value,
+                            stateLabel: document.getElementById(paymentMethod + '-state-label').value,
+                            stateError: document.getElementById(paymentMethod + '-state-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                            prefilledAddress: document.getElementById(paymentMethod + '-prefilled-address').value,
+                            prefilledZipCode: document.getElementById(paymentMethod + '-prefilled-zipcode').value,
+                            prefilledCity: document.getElementById(paymentMethod + '-prefilled-city').value,
+                            prefilledCountry: document.getElementById(paymentMethod + '-prefilled-country').value,
+                            prefilledState: document.getElementById(paymentMethod + '-prefilled-state').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "310px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.ideal_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.ideal_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if(paymentMethod === "pix") {
+                    payButton.style.display = "none";
+
+                    await paylandsCheckout.pix({
+                        container: 'payment-iframe',
+                        customization: {
+                            buttonText: document.getElementById(paymentMethod + '-button-text').value,
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            primaryColor: document.getElementById(paymentMethod + '-primary-color').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            buttonTextSize: document.getElementById(paymentMethod + '-button-text-size').value,
+                        }
                     });
                 }
             })
