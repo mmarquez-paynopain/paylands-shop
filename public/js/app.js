@@ -363,10 +363,218 @@ document.addEventListener('DOMContentLoaded', () => {
                     payButton.addEventListener("click", () => {
                         window.postMessage({ pay: paymentMethod });
                     });
-                } else if(paymentMethod === "pix") {
+                } else if (paymentMethod === "viacash") {
+                    await paylandsCheckout.viacash({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "140px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.viacash_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.viacash_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if (paymentMethod === "sofort") {
+                    await paylandsCheckout.sofort({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            addressLabel: document.getElementById(paymentMethod + '-address-label').value,
+                            addressError: document.getElementById(paymentMethod + '-address-error').value,
+                            zipCodeLabel: document.getElementById(paymentMethod + '-zipcode-label').value,
+                            zipCodeError: document.getElementById(paymentMethod + '-zipcode-error').value,
+                            cityLabel: document.getElementById(paymentMethod + '-city-label').value,
+                            cityError: document.getElementById(paymentMethod + '-city-error').value,
+                            countryLabel: document.getElementById(paymentMethod + '-country-label').value,
+                            countryError: document.getElementById(paymentMethod + '-country-error').value,
+                            stateLabel: document.getElementById(paymentMethod + '-state-label').value,
+                            stateError: document.getElementById(paymentMethod + '-state-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                            prefilledAddress: document.getElementById(paymentMethod + '-prefilled-address').value,
+                            prefilledZipCode: document.getElementById(paymentMethod + '-prefilled-zipcode').value,
+                            prefilledCity: document.getElementById(paymentMethod + '-prefilled-city').value,
+                            prefilledCountry: document.getElementById(paymentMethod + '-prefilled-country').value,
+                            prefilledState: document.getElementById(paymentMethod + '-prefilled-state').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "310px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.sofort_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.sofort_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                } else if (paymentMethod === "klarna") {
+                    await paylandsCheckout.klarna({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            addressLabel: document.getElementById(paymentMethod + '-address-label').value,
+                            addressError: document.getElementById(paymentMethod + '-address-error').value,
+                            zipCodeLabel: document.getElementById(paymentMethod + '-zipcode-label').value,
+                            zipCodeError: document.getElementById(paymentMethod + '-zipcode-error').value,
+                            cityLabel: document.getElementById(paymentMethod + '-city-label').value,
+                            cityError: document.getElementById(paymentMethod + '-city-error').value,
+                            countryLabel: document.getElementById(paymentMethod + '-country-label').value,
+                            countryError: document.getElementById(paymentMethod + '-country-error').value,
+                            stateLabel: document.getElementById(paymentMethod + '-state-label').value,
+                            stateError: document.getElementById(paymentMethod + '-state-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                            prefilledAddress: document.getElementById(paymentMethod + '-prefilled-address').value,
+                            prefilledZipCode: document.getElementById(paymentMethod + '-prefilled-zipcode').value,
+                            prefilledCity: document.getElementById(paymentMethod + '-prefilled-city').value,
+                            prefilledCountry: document.getElementById(paymentMethod + '-prefilled-country').value,
+                            prefilledState: document.getElementById(paymentMethod + '-prefilled-state').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "310px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.klarna_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.klarna_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+
+                } else if (paymentMethod === "transfer") {
+                    await paylandsCheckout.transfer({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "140px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.transfer_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.transfer_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+                    
+                } else if (paymentMethod === "multibanco") {
                     payButton.style.display = "none";
 
-                    await paylandsCheckout.pix({
+                    await paylandsCheckout.multibanco({
                         container: 'payment-iframe',
                         customization: {
                             buttonText: document.getElementById(paymentMethod + '-button-text').value,
@@ -379,6 +587,75 @@ document.addEventListener('DOMContentLoaded', () => {
                             buttonTextSize: document.getElementById(paymentMethod + '-button-text-size').value,
                         }
                     });
+
+                } else if (paymentMethod === "mbway") {
+                    await paylandsCheckout.mbway({
+                        container: 'payment-iframe',
+                        form: {
+                            nameLabel: document.getElementById(paymentMethod + '-name-label').value,
+                            nameError: document.getElementById(paymentMethod + '-name-error').value,
+                            lastNameLabel: document.getElementById(paymentMethod + '-lastname-label').value,
+                            lastNameError: document.getElementById(paymentMethod + '-lastname-error').value,
+                            emailLabel: document.getElementById(paymentMethod + '-email-label').value,
+                            emailError: document.getElementById(paymentMethod + '-email-error').value,
+                            prefixLabel: document.getElementById(paymentMethod + '-prefix-label').value,
+                            prefixError: document.getElementById(paymentMethod + '-prefix-error').value,
+                            phoneLabel: document.getElementById(paymentMethod + '-phone-label').value,
+                            phoneError: document.getElementById(paymentMethod + '-phone-error').value,
+                            prefilledName: document.getElementById(paymentMethod + '-prefilled-name').value,
+                            prefilledLastName: document.getElementById(paymentMethod + '-prefilled-lastname').value,
+                            prefilledEmail: document.getElementById(paymentMethod + '-prefilled-email').value,
+                            prefilledPrefix: document.getElementById(paymentMethod + '-prefilled-prefix').value,
+                            prefilledPhone: document.getElementById(paymentMethod + '-prefilled-phone').value,
+                        },
+                        customization: {
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            errorColor: document.getElementById(paymentMethod + '-error-color').value,
+                            borderColor: document.getElementById(paymentMethod + '-border-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            inputTextSize: document.getElementById(paymentMethod + '-input-text-size').value,
+                            labelTextSize: document.getElementById(paymentMethod + '-label-text-size').value,
+                            iconSize: "20px",
+                            iconColor: document.getElementById(paymentMethod + '-icon-color').value,
+                        }
+                    });
+
+                    document.getElementById('payment-iframe').style.height = "190px";
+
+                    window.addEventListener('message', event => {
+                        if (event.data.mbway_valid === true) {
+                            payButton.classList.remove('disabled');
+                        }
+
+                        if (event.data.mbway_valid === false) {
+                            payButton.classList.add('disabled');
+                        }
+                    });
+
+                    payButton.addEventListener("click", () => {
+                        window.postMessage({ pay: paymentMethod });
+                    });
+
+                } else if (paymentMethod === "floa") {
+                    payButton.style.display = "none";
+
+                    await paylandsCheckout.floa({
+                        container: 'payment-iframe',
+                        customization: {
+                            buttonText: document.getElementById(paymentMethod + '-button-text').value,
+                            font: document.getElementById(paymentMethod + '-font').value,
+                            primaryColor: document.getElementById(paymentMethod + '-primary-color').value,
+                            textColor: document.getElementById(paymentMethod + '-text-color').value,
+                            backgroundColor: document.getElementById(paymentMethod + '-background-color').value,
+                            borderRadius: document.getElementById(paymentMethod + '-border-radius').value,
+                            padding: document.getElementById(paymentMethod + '-padding').value,
+                            buttonTextSize: document.getElementById(paymentMethod + '-button-text-size').value,
+                        }
+                    });
+                                        
                 }
             })
             .catch(error => {
