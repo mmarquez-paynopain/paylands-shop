@@ -666,13 +666,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.data.redirect) {
                 window.top.location.href = event.data.redirect;
             } else if (event.data.render) {
+                document.getElementById('checkout').innerHTML = '';
+
                 const iframe = document.createElement('iframe');
                 iframe.id = 'payment-iframe';
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.border = 'none';
 
-                document.getElementById('checkout').innerHTML = '';
                 document.getElementById('checkout').appendChild(iframe);
 
                 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
