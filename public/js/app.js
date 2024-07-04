@@ -672,7 +672,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 iframe.style.height = '100%';
                 iframe.style.border = 'none';
 
-                document.body.appendChild(iframe);
+                document.getElementById('checkout').innerHTML = '';
+                document.getElementById('checkout').appendChild(iframe);
 
                 const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
